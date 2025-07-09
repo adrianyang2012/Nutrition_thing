@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -341,11 +341,7 @@
                 <div class="plate-card">
                     <h3>Easy Training Plate</h3>
                     <div class="plate-visual">
-                        <div class="plate-sections plate-sections-easy">
-                            <div class="section carbs-easy">1/4 Carbs</div>
-                            <div class="section protein-easy">1/4 Protein</div>
-                            <div class="section veggies-easy">1/4 Veggies</div>
-                            <div class="section fats-easy">1/4 Fats</div>
+                        <div class="plate-sections" id="easy-plate">
                         </div>
                     </div>
                     <p>Recovery days, light training</p>
@@ -354,11 +350,7 @@
                 <div class="plate-card">
                     <h3>Moderate Training Plate</h3>
                     <div class="plate-visual">
-                        <div class="plate-sections plate-sections-moderate">
-                            <div class="section carbs-moderate">1/3 Carbs</div>
-                            <div class="section protein-moderate">1/4 Protein</div>
-                            <div class="section veggies-moderate">1/4 Veggies</div>
-                            <div class="section fats-moderate">Fats</div>
+                        <div class="plate-sections" id="moderate-plate">
                         </div>
                     </div>
                     <p>Regular practice sessions</p>
@@ -367,11 +359,7 @@
                 <div class="plate-card">
                     <h3>Hard Training Plate</h3>
                     <div class="plate-visual">
-                        <div class="plate-sections plate-sections-hard">
-                            <div class="section carbs-hard">1/2 Carbs</div>
-                            <div class="section protein-hard">1/4 Protein</div>
-                            <div class="section veggies-hard">1/6 Veggies</div>
-                            <div class="section fats-hard">Fats</div>
+                        <div class="plate-sections" id="hard-plate">
                         </div>
                     </div>
                     <p>Intense training, pre-competition</p>
@@ -386,7 +374,87 @@
             card.addEventListener('click', function() {
                 document.querySelectorAll('.intensity-card').forEach(c => c.classList.remove('selected'));
                 this.classList.add('selected');
+            // Create plate visualizations with calculated positions
+        function createPlate(plateId, macros) {
+            const plate = document.getElementById(plateId);
+            if (!plate) return;
+            
+            const colors = {
+                carbs: '#ff9a9e',
+                protein: '#a8edea', 
+                veggies: '#d299c2',
+                fats: '#fecfef'
+            };
+            
+            // Calculate angles for conic gradient
+            let currentAngle = 0;
+            const gradientStops = [];
+            const sections = [];
+            
+            Object.entries(macros).forEach(([macro, percentage]) => {
+                const startAngle = currentAngle;
+                const endAngle = currentAngle + (percentage * 3.6); // Convert percentage to degrees
+                
+                gradientStops.push(`${colors[macro]} ${startAngle}deg ${endAngle}deg`);
+                
+                // Calculate label position (center of each section)
+                const middleAngle = (startAngle + endAngle) / 2;
+                const radians = (middleAngle * Math.PI) / 180;
+                const radius = 50; // Distance from center
+                const centerX = 80; // Half of plate width
+                const centerY = 80; // Half of plate height
+                
+                const x = centerX + radius * Math.cos(radians - Math.PI/2);
+                const y = centerY + radius * Math.sin(radians - Math.PI/2);
+                
+                sections.push({
+                    macro,
+                    percentage,
+                    x: x - 20, // Offset for label width
+                    y: y - 10  // Offset for label height
+                });
+                
+                currentAngle = endAngle;
             });
+            
+            // Apply gradient background
+            plate.style.background = `conic-gradient(from 0deg, ${gradientStops.join(', ')})`;
+            
+            // Add labels
+            sections.forEach(section => {
+                const label = document.createElement('div');
+                label.className = 'section';
+                label.style.left = `${section.x}px`;
+                label.style.top = `${section.y}px`;
+                label.textContent = `${section.percentage}% ${section.macro.charAt(0).toUpperCase() + section.macro.slice(1)}`;
+                plate.appendChild(label);
+            });
+        }
+        
+        // Initialize plates when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Plate configurations based on USA Swimming guidelines
+            createPlate('easy-plate', {
+                carbs: 25,
+                protein: 25,
+                veggies: 25,
+                fats: 25
+            });
+            
+            createPlate('moderate-plate', {
+                carbs: 33,
+                protein: 25,
+                veggies: 25,
+                fats: 17
+            });
+            
+            createPlate('hard-plate', {
+                carbs: 50,
+                protein: 25,
+                veggies: 17,
+                fats: 8
+            });
+        });
         });
 
         // Form submission
