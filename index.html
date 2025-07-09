@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +46,7 @@
 
         .subtitle {
             font-size: 1.2rem;
-            color: #666;
+            color: #667;
             margin-bottom: 30px;
         }
 
@@ -108,9 +109,20 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .intensity-card.selected {
-            border-color: #fff;
+        .intensity-card input[type="radio"] {
+            display: none;
+        }
+
+        .intensity-card input[type="radio"]:checked + .intensity-content {
+            border: 3px solid #fff;
             transform: scale(1.05);
+            border-radius: 15px;
+        }
+
+        .intensity-content {
+            border: 3px solid transparent;
+            border-radius: 15px;
+            transition: all 0.3s ease;
         }
 
         .intensity-card h3 {
@@ -178,15 +190,11 @@
         }
 
         .plate-sections {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 5px;
             width: 160px;
             height: 160px;
             border-radius: 50%;
-            overflow: hidden;
             position: relative;
+            margin: 0 auto;
         }
 
         .plate-sections-easy {
@@ -202,10 +210,10 @@
         .plate-sections-moderate {
             background: conic-gradient(
                 from 0deg,
-                #ff9a9e 0deg 120deg,
-                #a8edea 120deg 210deg,
-                #d299c2 210deg 300deg,
-                #fecfef 300deg 360deg
+                #ff9a9e 0deg 119deg,
+                #a8edea 119deg 209deg,
+                #d299c2 209deg 299deg,
+                #fecfef 299deg 360deg
             );
         }
 
@@ -213,35 +221,94 @@
             background: conic-gradient(
                 from 0deg,
                 #ff9a9e 0deg 180deg,
-                #a8edea 180deg 252deg,
-                #d299c2 252deg 324deg,
-                #fecfef 324deg 360deg
+                #a8edea 180deg 270deg,
+                #d299c2 270deg 331deg,
+                #fecfef 331deg 360deg
             );
         }
 
         .section {
             position: absolute;
+            color: white;
+            font-weight: bold;
+            font-size: 8px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            text-align: center;
+            line-height: 1;
+            width: 40px;
+            height: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 10px;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
         }
 
-        .carbs-easy { top: 0; left: 50%; transform: translateX(-50%); width: 50%; height: 50%; }
-        .protein-easy { top: 50%; left: 50%; width: 50%; height: 50%; }
-        .veggies-easy { top: 50%; left: 0; width: 50%; height: 50%; }
-        .fats-easy { top: 0; left: 0; width: 50%; height: 50%; }
+        /* Easy Training - Equal quarters (90 degrees each) */
+        .carbs-easy { 
+            top: 25px; 
+            right: 25px; 
+            /* Center of 0-90 degree section (45 degrees) */
+        }
+        .protein-easy { 
+            bottom: 25px; 
+            right: 25px; 
+            /* Center of 90-180 degree section (135 degrees) */
+        }
+        .veggies-easy { 
+            bottom: 25px; 
+            left: 25px; 
+            /* Center of 180-270 degree section (225 degrees) */
+        }
+        .fats-easy { 
+            top: 25px; 
+            left: 25px; 
+            /* Center of 270-360 degree section (315 degrees) */
+        }
 
-        .carbs-moderate { top: 20%; left: 50%; transform: translateX(-50%); width: 60%; height: 60%; }
-        .protein-moderate { bottom: 10%; left: 60%; width: 40%; height: 40%; }
-        .veggies-moderate { bottom: 10%; left: 10%; width: 40%; height: 40%; }
-        .carbs-hard { top: 0; left: 0; width: 100%; height: 50%; }
-        .protein-hard { bottom: 0; left: 50%; width: 50%; height: 50%; }
-        .veggies-hard { bottom: 0; left: 16.67%; width: 33.33%; height: 50%; }
-        .fats-hard { bottom: 0; left: 0; width: 16.67%; height: 50%; }
+        /* Moderate Training - 33%, 25%, 25%, 17% */
+        .carbs-moderate { 
+            top: 15px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            /* Center of 0-119 degree section (59.5 degrees) */
+        }
+        .protein-moderate { 
+            bottom: 15px; 
+            right: 15px;
+            /* Center of 119-209 degree section (164 degrees) */
+        }
+        .veggies-moderate { 
+            bottom: 15px; 
+            left: 15px;
+            /* Center of 209-299 degree section (254 degrees) */
+        }
+        .fats-moderate { 
+            top: 15px; 
+            right: 15px;
+            /* Center of 299-360 degree section (329.5 degrees) */
+        }
+
+        /* Hard Training - 50%, 25%, 17%, 8% */
+        .carbs-hard { 
+            top: 25px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            /* Center of 0-180 degree section (90 degrees) */
+        }
+        .protein-hard { 
+            bottom: 15px; 
+            right: 30px;
+            /* Center of 180-270 degree section (225 degrees) */
+        }
+        .veggies-hard { 
+            bottom: 15px; 
+            left: 30px;
+            /* Center of 270-331 degree section (300.5 degrees) */
+        }
+        .fats-hard { 
+            top: 40px; 
+            right: 10px;
+            /* Center of 331-360 degree section (345.5 degrees) */
+        }
 
         @media (max-width: 768px) {
             .container {
@@ -269,12 +336,12 @@
             <h2>Tell Us About Your Swimming Goals</h2>
             <form id="swimmerSurvey">
                 <div class="form-group">
-                    <label>Swimmer's Name</label>
+                    <label for="swimmerName">Swimmer's Name</label>
                     <input type="text" id="swimmerName" placeholder="Enter swimmer's name">
                 </div>
 
                 <div class="form-group">
-                    <label>Age</label>
+                    <label for="age">Age</label>
                     <select id="age">
                         <option value="">Select age range</option>
                         <option value="6-8">6-8 years</option>
@@ -287,35 +354,44 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Weight (kg)</label>
+                    <label for="weight">Weight (kg)</label>
                     <input type="number" id="weight" placeholder="Enter weight in kg">
                 </div>
 
                 <div class="form-group">
-                    <label>Next Big Meet Date</label>
+                    <label for="meetDate">Next Big Meet Date</label>
                     <input type="date" id="meetDate">
                 </div>
 
                 <div class="form-group">
                     <label>Training Intensity Level</label>
                     <div class="training-intensity">
-                        <div class="intensity-card" data-intensity="easy">
-                            <h3>Easy Training</h3>
-                            <p>1/4 plate carbs<br>Recovery days</p>
-                        </div>
-                        <div class="intensity-card" data-intensity="moderate">
-                            <h3>Moderate Training</h3>
-                            <p>1/3 plate carbs<br>Regular practice</p>
-                        </div>
-                        <div class="intensity-card" data-intensity="hard">
-                            <h3>Hard Training</h3>
-                            <p>1/2 plate carbs<br>Intense sessions</p>
-                        </div>
+                        <label class="intensity-card">
+                            <input type="radio" name="intensity" value="easy">
+                            <div class="intensity-content">
+                                <h3>Easy Training</h3>
+                                <p>1/4 plate carbs<br>Recovery days</p>
+                            </div>
+                        </label>
+                        <label class="intensity-card">
+                            <input type="radio" name="intensity" value="moderate">
+                            <div class="intensity-content">
+                                <h3>Moderate Training</h3>
+                                <p>1/3 plate carbs<br>Regular practice</p>
+                            </div>
+                        </label>
+                        <label class="intensity-card">
+                            <input type="radio" name="intensity" value="hard">
+                            <div class="intensity-content">
+                                <h3>Hard Training</h3>
+                                <p>1/2 plate carbs<br>Intense sessions</p>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Primary Events</label>
+                    <label for="events">Primary Events</label>
                     <select id="events" multiple>
                         <option value="sprint">Sprint (50m-100m)</option>
                         <option value="middle">Middle Distance (200m-400m)</option>
@@ -325,7 +401,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Dietary Restrictions</label>
+                    <label for="restrictions">Dietary Restrictions</label>
                     <textarea id="restrictions" placeholder="List any allergies, dietary preferences, or restrictions"></textarea>
                 </div>
 
@@ -341,7 +417,11 @@
                 <div class="plate-card">
                     <h3>Easy Training Plate</h3>
                     <div class="plate-visual">
-                        <div class="plate-sections" id="easy-plate">
+                        <div class="plate-sections plate-sections-easy">
+                            <div class="section carbs-easy">25% Carbs</div>
+                            <div class="section protein-easy">25% Protein</div>
+                            <div class="section veggies-easy">25% Veggies</div>
+                            <div class="section fats-easy">25% Fats</div>
                         </div>
                     </div>
                     <p>Recovery days, light training</p>
@@ -350,7 +430,11 @@
                 <div class="plate-card">
                     <h3>Moderate Training Plate</h3>
                     <div class="plate-visual">
-                        <div class="plate-sections" id="moderate-plate">
+                        <div class="plate-sections plate-sections-moderate">
+                            <div class="section carbs-moderate">33% Carbs</div>
+                            <div class="section protein-moderate">25% Protein</div>
+                            <div class="section veggies-moderate">25% Veggies</div>
+                            <div class="section fats-moderate">17% Fats</div>
                         </div>
                     </div>
                     <p>Regular practice sessions</p>
@@ -359,7 +443,11 @@
                 <div class="plate-card">
                     <h3>Hard Training Plate</h3>
                     <div class="plate-visual">
-                        <div class="plate-sections" id="hard-plate">
+                        <div class="plate-sections plate-sections-hard">
+                            <div class="section carbs-hard">50% Carbs</div>
+                            <div class="section protein-hard">25% Protein</div>
+                            <div class="section veggies-hard">17% Veggies</div>
+                            <div class="section fats-hard">8% Fats</div>
                         </div>
                     </div>
                     <p>Intense training, pre-competition</p>
@@ -367,140 +455,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Training intensity selection
-        document.querySelectorAll('.intensity-card').forEach(card => {
-            card.addEventListener('click', function() {
-                document.querySelectorAll('.intensity-card').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-            // Create plate visualizations with calculated positions
-        function createPlate(plateId, macros) {
-            const plate = document.getElementById(plateId);
-            if (!plate) return;
-            
-            const colors = {
-                carbs: '#ff9a9e',
-                protein: '#a8edea', 
-                veggies: '#d299c2',
-                fats: '#fecfef'
-            };
-            
-            // Calculate angles for conic gradient
-            let currentAngle = 0;
-            const gradientStops = [];
-            const sections = [];
-            
-            Object.entries(macros).forEach(([macro, percentage]) => {
-                const startAngle = currentAngle;
-                const endAngle = currentAngle + (percentage * 3.6); // Convert percentage to degrees
-                
-                gradientStops.push(`${colors[macro]} ${startAngle}deg ${endAngle}deg`);
-                
-                // Calculate label position (center of each section)
-                const middleAngle = (startAngle + endAngle) / 2;
-                const radians = (middleAngle * Math.PI) / 180;
-                const radius = 50; // Distance from center
-                const centerX = 80; // Half of plate width
-                const centerY = 80; // Half of plate height
-                
-                const x = centerX + radius * Math.cos(radians - Math.PI/2);
-                const y = centerY + radius * Math.sin(radians - Math.PI/2);
-                
-                sections.push({
-                    macro,
-                    percentage,
-                    x: x - 20, // Offset for label width
-                    y: y - 10  // Offset for label height
-                });
-                
-                currentAngle = endAngle;
-            });
-            
-            // Apply gradient background
-            plate.style.background = `conic-gradient(from 0deg, ${gradientStops.join(', ')})`;
-            
-            // Add labels
-            sections.forEach(section => {
-                const label = document.createElement('div');
-                label.className = 'section';
-                label.style.left = `${section.x}px`;
-                label.style.top = `${section.y}px`;
-                label.textContent = `${section.percentage}% ${section.macro.charAt(0).toUpperCase() + section.macro.slice(1)}`;
-                plate.appendChild(label);
-            });
-        }
-        
-        // Initialize plates when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Plate configurations based on USA Swimming guidelines
-            createPlate('easy-plate', {
-                carbs: 25,
-                protein: 25,
-                veggies: 25,
-                fats: 25
-            });
-            
-            createPlate('moderate-plate', {
-                carbs: 33,
-                protein: 25,
-                veggies: 25,
-                fats: 17
-            });
-            
-            createPlate('hard-plate', {
-                carbs: 50,
-                protein: 25,
-                veggies: 17,
-                fats: 8
-            });
-        });
-        });
-
-        // Form submission
-        document.getElementById('swimmerSurvey').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('swimmerName').value,
-                age: document.getElementById('age').value,
-                weight: document.getElementById('weight').value,
-                meetDate: document.getElementById('meetDate').value,
-                intensity: document.querySelector('.intensity-card.selected')?.dataset.intensity,
-                events: Array.from(document.getElementById('events').selectedOptions).map(opt => opt.value),
-                restrictions: document.getElementById('restrictions').value
-            };
-
-            // Calculate days until meet
-            const meetDate = new Date(formData.meetDate);
-            const today = new Date();
-            const daysUntilMeet = Math.ceil((meetDate - today) / (1000 * 60 * 60 * 24));
-            
-            // Calculate macronutrient needs based on USA Swimming guidelines
-            const weight = parseFloat(formData.weight);
-            let carbsPerKg, proteinPerKg;
-            
-            switch(formData.intensity) {
-                case 'easy':
-                    carbsPerKg = 3; // 3g/kg/day
-                    break;
-                case 'moderate':
-                    carbsPerKg = 5; // 5g/kg/day
-                    break;
-                case 'hard':
-                    carbsPerKg = 8; // 8g/kg/day
-                    break;
-                default:
-                    carbsPerKg = 5;
-            }
-            
-            proteinPerKg = 1.7; // 1.5-2.0g/kg/day (USA Swimming guideline)
-            
-            const dailyCarbs = Math.round(weight * carbsPerKg);
-            const dailyProtein = Math.round(weight * proteinPerKg);
-            
-            alert(`Nutrition plan generated for ${formData.name}!\n\nDays until meet: ${daysUntilMeet}\nDaily carbs needed: ${dailyCarbs}g\nDaily protein needed: ${dailyProtein}g\n\nYour personalized meal plan will be ready shortly!`);
-        });
-    </script>
 </body>
 </html>
