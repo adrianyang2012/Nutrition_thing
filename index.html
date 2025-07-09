@@ -1,0 +1,438 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwimFuel Pro - Elite Swimmer Nutrition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .survey-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .training-intensity {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .intensity-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .intensity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .intensity-card.selected {
+            border-color: #fff;
+            transform: scale(1.05);
+        }
+
+        .intensity-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .intensity-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .nutrition-preview {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .plate-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .plate-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .plate-visual {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .plate-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 5px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .plate-sections-easy {
+            background: conic-gradient(
+                from 0deg,
+                #ff9a9e 0deg 90deg,
+                #a8edea 90deg 180deg,
+                #d299c2 180deg 270deg,
+                #fecfef 270deg 360deg
+            );
+        }
+
+        .plate-sections-moderate {
+            background: conic-gradient(
+                from 0deg,
+                #ff9a9e 0deg 120deg,
+                #a8edea 120deg 210deg,
+                #d299c2 210deg 300deg,
+                #fecfef 300deg 360deg
+            );
+        }
+
+        .plate-sections-hard {
+            background: conic-gradient(
+                from 0deg,
+                #ff9a9e 0deg 180deg,
+                #a8edea 180deg 252deg,
+                #d299c2 252deg 324deg,
+                #fecfef 324deg 360deg
+            );
+        }
+
+        .section {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+        }
+
+        .carbs-easy { top: 0; left: 50%; transform: translateX(-50%); width: 50%; height: 50%; }
+        .protein-easy { top: 50%; left: 50%; width: 50%; height: 50%; }
+        .veggies-easy { top: 50%; left: 0; width: 50%; height: 50%; }
+        .fats-easy { top: 0; left: 0; width: 50%; height: 50%; }
+
+        .carbs-moderate { top: 20%; left: 50%; transform: translateX(-50%); width: 60%; height: 60%; }
+        .protein-moderate { bottom: 10%; left: 60%; width: 40%; height: 40%; }
+        .veggies-moderate { bottom: 10%; left: 10%; width: 40%; height: 40%; }
+        .carbs-hard { top: 0; left: 0; width: 100%; height: 50%; }
+        .protein-hard { bottom: 0; left: 50%; width: 50%; height: 50%; }
+        .veggies-hard { bottom: 0; left: 16.67%; width: 33.33%; height: 50%; }
+        .fats-hard { bottom: 0; left: 0; width: 16.67%; height: 50%; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .survey-card, .nutrition-preview {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SwimFuel Pro</h1>
+            <p class="subtitle">Personalized Nutrition for Elite Swimmers</p>
+        </header>
+
+        <div class="survey-card">
+            <h2>Tell Us About Your Swimming Goals</h2>
+            <form id="swimmerSurvey">
+                <div class="form-group">
+                    <label>Swimmer's Name</label>
+                    <input type="text" id="swimmerName" placeholder="Enter swimmer's name">
+                </div>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <select id="age">
+                        <option value="">Select age range</option>
+                        <option value="6-8">6-8 years</option>
+                        <option value="9-10">9-10 years</option>
+                        <option value="11-12">11-12 years</option>
+                        <option value="13-15">13-15 years</option>
+                        <option value="16-18">16-18 years</option>
+                        <option value="19+">19 and up</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Weight (kg)</label>
+                    <input type="number" id="weight" placeholder="Enter weight in kg">
+                </div>
+
+                <div class="form-group">
+                    <label>Next Big Meet Date</label>
+                    <input type="date" id="meetDate">
+                </div>
+
+                <div class="form-group">
+                    <label>Training Intensity Level</label>
+                    <div class="training-intensity">
+                        <div class="intensity-card" data-intensity="easy">
+                            <h3>Easy Training</h3>
+                            <p>1/4 plate carbs<br>Recovery days</p>
+                        </div>
+                        <div class="intensity-card" data-intensity="moderate">
+                            <h3>Moderate Training</h3>
+                            <p>1/3 plate carbs<br>Regular practice</p>
+                        </div>
+                        <div class="intensity-card" data-intensity="hard">
+                            <h3>Hard Training</h3>
+                            <p>1/2 plate carbs<br>Intense sessions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Primary Events</label>
+                    <select id="events" multiple>
+                        <option value="sprint">Sprint (50m-100m)</option>
+                        <option value="middle">Middle Distance (200m-400m)</option>
+                        <option value="distance">Distance (800m+)</option>
+                        <option value="im">Individual Medley</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Dietary Restrictions</label>
+                    <textarea id="restrictions" placeholder="List any allergies, dietary preferences, or restrictions"></textarea>
+                </div>
+
+                <button type="submit" class="btn">Generate My Nutrition Plan</button>
+            </form>
+        </div>
+
+        <div class="nutrition-preview">
+            <h2>Training Plate Examples</h2>
+            <p>Based on USA Swimming guidelines, here are the different plate compositions for various training intensities:</p>
+            
+            <div class="plate-examples">
+                <div class="plate-card">
+                    <h3>Easy Training Plate</h3>
+                    <div class="plate-visual">
+                        <div class="plate-sections plate-sections-easy">
+                            <div class="section carbs-easy">1/4 Carbs</div>
+                            <div class="section protein-easy">1/4 Protein</div>
+                            <div class="section veggies-easy">1/4 Veggies</div>
+                            <div class="section fats-easy">1/4 Fats</div>
+                        </div>
+                    </div>
+                    <p>Recovery days, light training</p>
+                </div>
+                
+                <div class="plate-card">
+                    <h3>Moderate Training Plate</h3>
+                    <div class="plate-visual">
+                        <div class="plate-sections plate-sections-moderate">
+                            <div class="section carbs-moderate">1/3 Carbs</div>
+                            <div class="section protein-moderate">1/4 Protein</div>
+                            <div class="section veggies-moderate">1/4 Veggies</div>
+                            <div class="section fats-moderate">Fats</div>
+                        </div>
+                    </div>
+                    <p>Regular practice sessions</p>
+                </div>
+                
+                <div class="plate-card">
+                    <h3>Hard Training Plate</h3>
+                    <div class="plate-visual">
+                        <div class="plate-sections plate-sections-hard">
+                            <div class="section carbs-hard">1/2 Carbs</div>
+                            <div class="section protein-hard">1/4 Protein</div>
+                            <div class="section veggies-hard">1/6 Veggies</div>
+                            <div class="section fats-hard">Fats</div>
+                        </div>
+                    </div>
+                    <p>Intense training, pre-competition</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Training intensity selection
+        document.querySelectorAll('.intensity-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.intensity-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Form submission
+        document.getElementById('swimmerSurvey').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('swimmerName').value,
+                age: document.getElementById('age').value,
+                weight: document.getElementById('weight').value,
+                meetDate: document.getElementById('meetDate').value,
+                intensity: document.querySelector('.intensity-card.selected')?.dataset.intensity,
+                events: Array.from(document.getElementById('events').selectedOptions).map(opt => opt.value),
+                restrictions: document.getElementById('restrictions').value
+            };
+
+            // Calculate days until meet
+            const meetDate = new Date(formData.meetDate);
+            const today = new Date();
+            const daysUntilMeet = Math.ceil((meetDate - today) / (1000 * 60 * 60 * 24));
+            
+            // Calculate macronutrient needs based on USA Swimming guidelines
+            const weight = parseFloat(formData.weight);
+            let carbsPerKg, proteinPerKg;
+            
+            switch(formData.intensity) {
+                case 'easy':
+                    carbsPerKg = 3; // 3g/kg/day
+                    break;
+                case 'moderate':
+                    carbsPerKg = 5; // 5g/kg/day
+                    break;
+                case 'hard':
+                    carbsPerKg = 8; // 8g/kg/day
+                    break;
+                default:
+                    carbsPerKg = 5;
+            }
+            
+            proteinPerKg = 1.7; // 1.5-2.0g/kg/day (USA Swimming guideline)
+            
+            const dailyCarbs = Math.round(weight * carbsPerKg);
+            const dailyProtein = Math.round(weight * proteinPerKg);
+            
+            alert(`Nutrition plan generated for ${formData.name}!\n\nDays until meet: ${daysUntilMeet}\nDaily carbs needed: ${dailyCarbs}g\nDaily protein needed: ${dailyProtein}g\n\nYour personalized meal plan will be ready shortly!`);
+        });
+    </script>
+</body>
+</html>
